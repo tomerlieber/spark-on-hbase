@@ -17,7 +17,4 @@ libraryDependencies ++= Seq(
   "org.apache.hbase" % "hbase-client" % hBaseVersion % "provided",
   "org.apache.hbase" % "hbase-server" % hBaseVersion % "provided",
   "org.scalatest" % "scalatest_2.10" % "2.2.4" % "test",
-//  "org.apache.hbase" % "hbase" % hBaseVersion % "test",
   "org.apache.hbase" % "hbase-testing-util" % "1.3.0" % "test")
-//  "org.apache.hadoop" % "hadoop-common" % hadoopVersion % "test",
-//  "org.apache.hadoop" % "hadoop-hdfs" % hadoopVersion % "test")
