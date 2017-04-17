@@ -16,8 +16,6 @@ import org.apache.hadoop.mapreduce.Job
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 import scala.collection.JavaConverters._
-//import scala.reflect.ClassTag
-//import scala.reflect.runtime.universe.TypeTag
 
 /**
   * Created by Tomer.
@@ -33,7 +31,7 @@ protected case class HBaseHandler(rowKeysToDelete: RDD[String],
                                   columns: Array[(String, String)] = Array.empty) extends Serializable with HBaseDelete with HBaseWriter with HBaseReader {
 
   private val utf8Encoding = "UTF-8"
-  private val hbaseHostKey = "spark.hbase.host"
+  private val hBaseHostKey = "spark.hbase.host"
 
   /////////////////
   // HBase Delete//
@@ -47,7 +45,7 @@ protected case class HBaseHandler(rowKeysToDelete: RDD[String],
     require(Option(sc).nonEmpty, "Spark Context must be implicit specified")
 
     // Gets HBase url from the spark configuration
-    val hBaseHostUrl = sc.getConf.get(hbaseHostKey)
+    val hBaseHostUrl = sc.getConf.get(hBaseHostKey)
 
     require(Option(hBaseHostUrl).nonEmpty && hBaseHostUrl.nonEmpty, "HBase url must be specified")
 
@@ -125,7 +123,7 @@ protected case class HBaseHandler(rowKeysToDelete: RDD[String],
     require(Option(sc).nonEmpty, "Spark Context must be implicit specified")
 
     // Gets HBase url from the spark configuration
-    val hBaseHostUrl = sc.getConf.get(hbaseHostKey)
+    val hBaseHostUrl = sc.getConf.get(hBaseHostKey)
 
     require(Option(hBaseHostUrl).nonEmpty && hBaseHostUrl.nonEmpty, "HBase url must be specified")
 
@@ -346,7 +344,7 @@ protected case class HBaseHandler(rowKeysToDelete: RDD[String],
     require(Option(sc).nonEmpty, "Spark Context must be implicit specified")
 
     // Gets HBase url from the spark configuration
-    val hBaseHostUrl = sc.getConf.get(hbaseHostKey)
+    val hBaseHostUrl = sc.getConf.get(hBaseHostKey)
 
     require(Option(hBaseHostUrl).nonEmpty && hBaseHostUrl.nonEmpty, "HBase url must be specified")
 
@@ -395,47 +393,4 @@ protected case class HBaseHandler(rowKeysToDelete: RDD[String],
       toTuple(Array(rowKey) ++ values)
     })
   }
-
-  // ---------------Use if in the future when attribute feature will be added--------------------
-  // For generic add in the method parameter [S <: Product : ClassTag : TypeTag]
-
-  // For generic: extract from K it's types as array of string
-  //  private def getTypes[K](tag: TypeTag[K]): Array[String] = {
-  //    val tagTypeString = tag.tpe.toString
-  //    val typesString = tagTypeString.substring(1, tagTypeString.length - 1)
-  //    typesString.split(", ")
-  //  }
-
-  // For generic: convert Any to bytes array according to wanted type
-  //  private def convertToAny(typeString: String, value: Array[Byte]): Any = {
-  //
-  //    typeString match {
-  //      case "Boolean" => Bytes.toBoolean(value)
-  //      case "String" => Bytes.toString(value)
-  //      case "Short" => Bytes.toShort(value)
-  //      case "Int" => Bytes.toInt(value)
-  //      case "Long" => Bytes.toLong(value)
-  //      case "Float" => Bytes.toFloat(value)
-  //      case "Double" => Bytes.toDouble(value)
-  //      case "BigDecimal" => Bytes.toBigDecimal(value)
-  //      case _ => throw new IllegalArgumentException("Not supported type '%s'".format(typeString))
-  //    }
-  //  }
-
-  // For generic: method that convert value to wanted type
-  //  private def convertToByteArray(typeStr: String, value: Any): Array[Byte] = {
-  //
-  //    typeStr match {
-  //      case "Boolean" => Bytes.toBytes(value.asInstanceOf[Boolean])
-  //      case "String" | "java.lang.String" => Bytes.toBytes(value.asInstanceOf[String])
-  //      case "Short" => Bytes.toBytes(value.asInstanceOf[Short])
-  //      case "Int" => Bytes.toBytes(value.asInstanceOf[Int])
-  //      case "Long" => Bytes.toBytes(value.asInstanceOf[Long])
-  //      case "Float" => Bytes.toBytes(value.asInstanceOf[Float])
-  //      case "Double" => Bytes.toBytes(value.asInstanceOf[Double])
-  //      // case "BigDecimal" => Bytes.toBytes(value.asInstanceOf[BigDecimal])
-  //      case _ => throw new IllegalArgumentException("Not supported type '%s'".format(typeStr))
-  //    }
-  //  }
-  // ------------------------------------------------------------------------------------------
 }
